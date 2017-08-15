@@ -45,15 +45,12 @@
   from its input."
   [weight heigt]
   (let [BMI (/ weight (* heigt heigt))]
-    (if (< BMI 20)
-      'underweight
-      (if (< BMI 25)
-        'normal
-        (if (< BMI 30)
-          'obese1
-          (if (< BMI 40)
-            'obese2
-            'obese3))))))
+    (cond
+      (< BMI 20) 'underweight
+      (< BMI 25)  'normal
+      (< BMI 30) 'obese1
+      (< BMI 40) 'obese2
+      :else 'obese3)))
 
 (deftest test-add1
   (is (= 6 (add1 5)))
