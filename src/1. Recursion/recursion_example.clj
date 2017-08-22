@@ -20,6 +20,8 @@
 (defn log2
   "Returns the base 2 logarithm of n."
   [n]
-  (if (<= n 1)
-    0
-    (inc (log2 (quot n 2)))))
+  (loop [accum 0
+         i     n]
+    (if (<= i 1)
+      accum
+      (recur (inc accum) (quot i 2)))))
