@@ -32,3 +32,18 @@
   (if (< n 1)
     ()
     (cons n (countdown (dec n)))))
+
+(defn howmany
+  "Returns how many times x is contained in lst,
+  considering nested lists."
+  [x lst]
+  (cond
+    (empty? lst)        0
+    (list? (first lst)) (+ (howmany x (first lst))
+                           (howmany x (rest lst)))
+    (= x (first lst))   (inc (howmany x (rest lst)))
+    :else               (howmany x (rest lst))))
+
+
+
+
