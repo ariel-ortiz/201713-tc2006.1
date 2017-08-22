@@ -16,3 +16,10 @@
     (cons (first lst)
           (cons (first lst)
                 (dup (rest lst))))))
+
+(defn log2
+  "Returns the base 2 logarithm of n."
+  [n]
+  (if (<= n 1)
+    0
+    (inc (log2 (quot n 2)))))
