@@ -44,6 +44,21 @@
     (= x (first lst))   (inc (howmany x (rest lst)))
     :else               (howmany x (rest lst))))
 
+(defn fibo
+  "Returns the n-th element of the Fibonacci sequence."
+  [n]
+  (if (<= n 1)
+    n
+    (+ (fibo (- n 1))
+       (fibo (- n 2)))))
 
-
-
+(defn fibo-loop
+  "Returns the n-th element of the Fibonacci sequence.
+  Uses loop/recur"
+  [n]
+  (loop [a 0N
+         b 1N
+         i 0]
+    (if (= i n)
+      a
+      (recur b (+ a b) (inc i)))))
