@@ -62,3 +62,29 @@
     (if (= i n)
       a
       (recur b (+ a b) (inc i)))))
+
+(defn encode
+  "Takes a list lst as its argument. Consecutive duplicates of
+   elements in lst are encoded as vectors [n e], where n is the
+   number of duplicates of the element e."
+  [lst]
+  (if (empty? lst)
+    ()
+    (loop [accum  [(first lst)]
+           lst    (rest lst)
+           result []]
+      (cond
+
+        (empty? lst)       (list* (conj result [(count accum)
+                                                (first accum)]))
+
+        (= (first accum)
+           (first lst))    (recur (conj accum (first lst))
+                                  (rest lst)
+                                  result)
+
+        :else              (recur [(first lst)]
+                                  (rest lst)
+                                  (conj result [(count accum)
+                                                (first accum)]))))))
+
