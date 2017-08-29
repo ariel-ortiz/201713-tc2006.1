@@ -44,8 +44,54 @@
        (= v1 v2)))
 
 (defn make-sum
-  "Returns a list with the representation of the sum of a1 and a2."
+  "Returns a representation of the sum of a1 and a2."
   [a1 a2]
-  (cons '+ (cons a1 (cons a2 ()))))
+  (cond
+    (= a1 0)          a2
+    (= a2 0)          a1
+    (and (number? a1)
+         (number? a2))  (+ a1 a2)
+    :else               (list '+ a1 a2)))
 
+(defn make-product
+  "Returns a representation of the product of m1 and m2."
+  [m1 m2]
+  (cond
+    (or (= m1 0) (= m2 0)) 0
+    (= m1 1)                   m2
+    (= m2 1)                   m1
+    (and (number? m1)
+         (number? m2))         (* m1 m2)
+    :else                      (list '* m1 m2)))
 
+(defn sum?
+  "Returns true if exp is a sum, false otherwise."
+  [exp]
+  (and (list? exp)
+       (= '+ (first exp))))
+
+(defn product?
+  "Returns true is exp is a product, false otherwise."
+  [exp]
+  (and (list? exp)
+       (= '* (first exp))))
+
+(defn addend
+  "Returns the addend (addition's first operand) of exp."
+  [exp]
+  (nth exp 1))
+
+(defn augend
+  "Returns the augend (addition's second operand) of exp."
+  [exp]
+  (nth exp 2))
+
+(defn multiplier
+  "Returns the multiplier (product's first operand) of exp."
+  [exp]
+  (nth exp 1))
+
+(defn multiplicand
+  "Returns the multiplicand (product's second operand) of exp."
+  [exp]
+  (nth exp 2))
