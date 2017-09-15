@@ -1,5 +1,5 @@
 ;==========================================================
-; Type your student ID and name here.
+; Solution to first practical exam.
 ;==========================================================
 
 (use 'clojure.test)
@@ -9,14 +9,30 @@
   "Computes the square root of s using the Babylonian
   method with n iterations."
   [s n]
-  0)
+  (if (zero? n)
+    1
+    (let [x (babylonian s (dec n))]
+      (* 1/2 (+ x (/ s x))))))
 
 ;==========================================================
 (defn twos-complement
   "Retuns the two's complement of a list containing only
   ones and zeros."
   [lst]
-  ())
+  (loop [state  0
+         lst    (reverse lst)
+         result ()]
+    (cond
+      (empty? lst)  result
+
+      (zero? state) (recur (first lst)
+                           (rest lst)
+                           (cons (first lst) result))
+
+      :else         (recur 1
+                           (rest lst)
+                           (cons (if (zero? (first lst)) 1 0)
+                                 result)))))
 
 ;==========================================================
 (use 'clojure.math.numeric-tower)
