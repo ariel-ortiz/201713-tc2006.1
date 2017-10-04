@@ -48,6 +48,40 @@
     (insert (first lst)
             (my-sort (rest lst)))))
 
+(defn qsort
+  "Sorts lst using the quick sort algorithm."
+  [lst]
+  (if (empty? lst)
+    ()
+    (concat
+      (qsort (filter (fn [x] (< x (first lst))) (rest lst)))
+      (list (first lst))
+      (qsort (filter (fn [x] (>= x (first lst))) (rest lst))))))
+
+(defn binary
+  "Return n converted into binary. Result is contained in a list
+  of ones and zeros."
+  [n]
+  (second
+    (first
+      (drop-while
+        (fn [[n _]] (not= n 0))
+        (iterate (fn [[n result]]
+                   [(quot n 2) (cons (rem n 2) result)])
+                 [n ()])))))
+
+(defn binary2
+  "Second version of the binary function. Uses the threading ->>
+  operator."
+  [n]
+  (->>
+    (iterate (fn [[n result]]
+               [(quot n 2) (cons (rem n 2) result)])
+             [n ()])
+    (drop-while (fn [[n _]] (not= n 0)))
+    first
+    second))
+
 (deftest test-add-list
   (is (= 0 (add-list ())))
   (is (= 10 (add-list '(2 4 1 3))))
