@@ -82,6 +82,42 @@
     first
     second))
 
+(defn pack
+  "Returns a list where consecutive repeated elements of
+  lst are placed in separate sublists."
+  [lst]
+  (partition-by identity lst))
+
+(defn encode
+  "Returns a list where consecutive repeated elements of
+  lst are placed in a vector [n e], where n is the number
+  of duplicates of the element e."
+  [lst]
+  (->>
+    (pack lst)
+    (map (fn [x] [(count x) (first x)]))))
+
+(defn encode-modified
+  "It works the same as encode, but if an element has no
+  duplicates it is simply copied into the result list."
+  [lst]
+  (->>
+    (encode lst)
+    (map (fn [x]
+           (if (= 1 (first x))
+             (second x)
+             x)))))
+
+(defn decode
+  "Decodes a list as if it was created by encode-modified."
+  [lst]
+  (mapcat (fn [x]
+           (if (vector? x)
+             (repeat (first x) (second x))
+             (list x)))
+          lst))
+
+
 (deftest test-add-list
   (is (= 0 (add-list ())))
   (is (= 10 (add-list '(2 4 1 3))))
