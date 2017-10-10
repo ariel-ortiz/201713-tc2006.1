@@ -117,6 +117,18 @@
              (list x)))
           lst))
 
+(defn remove-divisibles
+  "Implements the sieve of Eratosthenes algorithm
+  to compute an infinite sequence of prime numbers."
+  [lst]
+  (lazy-seq
+    (cons (first lst)
+          (remove-divisibles
+            (remove #(zero? (rem % (first lst))) lst)))))
+
+(def primes
+  "An infinite lazy sequence of prime numbers."
+  (remove-divisibles (iterate inc 2)))
 
 (deftest test-add-list
   (is (= 0 (add-list ())))
