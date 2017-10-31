@@ -9,21 +9,29 @@
   "Integer square root. Returns a vector [p q] where
   n = p^2 + q."
   [n]
-  nil)
+  (let [result (->>
+                 (range (inc n))
+                 (take-while #(<= (* % %) n))
+                 last)]
+    [result (- n (* result result))]))
 
 ;==========================================================
 (defn twos-complement
   "Retuns the two's complement of a list containing only
   ones and zeros."
   [lst]
-  nil)
+  (let [[part1 part2] (split-with zero? (reverse lst))
+        complement (map #(if (zero? %) 1 0) (rest part2))]
+    (reverse (concat part1 [1] complement))))
+
 
 ;==========================================================
 (defn interleave-inverse
   "Inverse interleave operation. uninterleaves lst into n
   subsequences."
   [n lst]
-  nil)
+  (for [i (range n)]
+    (take-nth n (drop i lst))))
 
 ;==========================================================
 (deftest test-isqrt
