@@ -30,8 +30,7 @@
   "Inverse interleave operation. uninterleaves lst into n
   subsequences."
   [n lst]
-  (for [i (range n)]
-    (take-nth n (drop i lst))))
+  (apply map list (partition n lst)))
 
 ;==========================================================
 (deftest test-isqrt
