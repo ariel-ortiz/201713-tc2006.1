@@ -7,7 +7,11 @@
   nil)
 
 (defmacro my-and
-  [x y]
-  `(if ~x
-     (if ~y true false)
-     false))
+  ([] true)
+  ([x] x)
+  ([x & y]
+   `(let [t# ~x]
+      (if t#
+        (my-and ~@y)
+        t#))))
+
