@@ -30,3 +30,15 @@
       (debug n)
       (debug (* n (fact (dec n)))))))
 
+(defn between-keywords
+  [start end lst]
+  (->>
+    (drop-while #(not= start %) lst)
+    rest
+    (take-while #(not= end %))))
+
+(defmacro IF
+  [condition & args]
+  `(if ~condition
+     (do ~@(between-keywords :THEN :ELSE args))
+     (do ~@(between-keywords :ELSE :THEN args))))
