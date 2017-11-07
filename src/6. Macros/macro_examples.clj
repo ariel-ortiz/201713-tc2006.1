@@ -15,3 +15,18 @@
         (my-and ~@y)
         t#))))
 
+(defmacro debug
+  [expr]
+  `(let [result# ~expr]
+     (do
+       (println "Debug:" '~expr "=>" result#)
+       result#)))
+
+(defn fact
+  [n]
+  (if (zero? n)
+    1N
+    (do
+      (debug n)
+      (debug (* n (fact (dec n)))))))
+
